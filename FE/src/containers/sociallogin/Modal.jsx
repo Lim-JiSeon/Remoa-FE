@@ -3,16 +3,13 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { RadioButtonUncheckedRounded } from "@mui/icons-material";
-import { RadioButtonCheckedRounded } from "@mui/icons-material";
 import { CheckCircleOutlineRounded } from "@mui/icons-material";
-import React, { useState, useEffect, useReducer, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./Modal.scss";
 import styled from "styled-components";
 import Agree from "./Agree";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useCookies, Cookies } from "react-cookie";
 
 const theme = createTheme({
   status: {
@@ -98,10 +95,10 @@ function Modal({ modalOpen }) {
     }
 
     const KakaoSignupForm = {
-      kakaoId: sessionStorage.getItem("id"),
-      email: sessionStorage.getItem("email"),
-      nickname: sessionStorage.getItem("nickname"),
-      profileImage: sessionStorage.getItem("image"),
+      kakaoId: localStorage.getItem("id"),
+      email: localStorage.getItem("email"),
+      nickname: localStorage.getItem("nickname"),
+      profileImage: localStorage.getItem("image"),
       termConsent: termConsent,
     };
 
@@ -111,10 +108,11 @@ function Modal({ modalOpen }) {
       .then((res) => {
         console.log(res);
         // userInfo 보냈으면 sessionStorage에 있는 것들 id빼고 다 지우기
-        alert("환영합니다, " + sessionStorage.getItem("nickname") + "님!"); // 한글 깨짐 문제 존재
-        sessionStorage.removeItem("email");
-        sessionStorage.removeItem("nickname");
-        sessionStorage.removeItem("image");
+        alert("환영합니다, " + localStorage.getItem("nickname") + "님!"); // 한글 깨짐 문제 존재
+        localStorage.removeItem("email");
+        localStorage.removeItem("nickname");
+        localStorage.removeItem("image");
+        localStorage.removeItem("id");
       })
       .catch((err) => {
         console.log(err);
